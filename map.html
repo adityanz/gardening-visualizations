@@ -100,7 +100,7 @@ d3.json(urls.basemap).then(function(json) {
 
   d3.json(urls.streets).then(drawStreets)
   // d3.json(urls.muni).then(drawMuni)
-  d3.csv("311_Cases_Wrangled.csv").then(drawArrests);
+  d3.csv("data.csv").then(drawArrests);
 });
 
 function drawBasemap(json) {
@@ -288,6 +288,8 @@ function drawArrests(json) {
     // });
 
 
+  var color = d3.scaleOrdinal().range(["#e55039", "#6ADC7C", "#4a69bd"]);
+
     var symbols = g.arrests.selectAll("circle")
         .data(json)
         .enter()
@@ -297,11 +299,7 @@ function drawArrests(json) {
         .attr("r", 5)
         .attr("class", "symbol")
         .style("fill", function (d) {
-
-          d['Category'] === 'Food Bank' ? x =  "#FF0000" : x = "#0000ff";
-
-          return x;
-
+          return color(d.Category);
         });
 
     symbols.on("mouseover", function(d) {
@@ -346,15 +344,15 @@ function drawArrests(json) {
 
 
   svg.select("#legend")
-  svg.append("circle").attr("cx",850).attr("cy",30).attr("r", 6).style("fill", "#FF0000")
-  svg.append("circle").attr("cx",850).attr("cy",50).attr("r", 6).style("fill", "#0000ff")
+  svg.append("circle").attr("cx",850).attr("cy",30).attr("r", 6).style("fill", "#e55039")
+  svg.append("circle").attr("cx",850).attr("cy",50).attr("r", 6).style("fill", "#6ADC7C")
   // svg.append("circle").attr("cx",870).attr("cy",70).attr("r", 6).style("fill", "#0000ff")
-  // svg.append("circle").attr("cx",870).attr("cy",90).attr("r", 6).style("fill", "#FF7F00")
+  svg.append("circle").attr("cx",850).attr("cy",70).attr("r", 6).style("fill", "#4a69bd")
   // svg.append("circle").attr("cx",870).attr("cy",110).attr("r", 6).style("fill", "#6a0dad")
   svg.append("text").attr("x", 800).attr("y", 10).text("Category").style("font-size", "12px").attr("alignment-baseline","middle")
   svg.append("text").attr("x", 860).attr("y", 30).text("Food Bank").style("font-size", "10px").attr("alignment-baseline","middle")
   svg.append("text").attr("x", 860).attr("y", 50).text("Community Garden").style("font-size", "10px").attr("alignment-baseline","middle")
-  // svg.append("text").attr("x", 880).attr("y", 70).text("Delay").style("font-size", "10px").attr("alignment-baseline","middle")
+  svg.append("text").attr("x", 860).attr("y", 70).text("Volunteer Organization").style("font-size", "10px").attr("alignment-baseline","middle")
   // svg.append("text").attr("x", 880).attr("y", 90).text("Discourtesy").style("font-size", "10px").attr("alignment-baseline","middle")
   // svg.append("text").attr("x", 880).attr("y", 110).text("NextMuni").style("font-size", "10px").attr("alignment-baseline","middle")
 
