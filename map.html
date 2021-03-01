@@ -296,12 +296,13 @@ function drawArrests(json) {
         .attr("cy", d => d.y)
         .attr("r", 5)
         .attr("class", "symbol")
-      // symbols.filter(d => d['Supervisor District'] !== selected_dataset)
+        .style("fill", function (d) {
 
-          symbols.filter(d => d['Category'] === 'Food Bank').style("fill","FF0000")
-          symbols.filter(d => d['Category'] === 'Community Garden').style("fill","0000ff")
+          d['Category'] === 'Food Bank' ? x =  "#FF0000" : x = "#0000ff";
 
+          return x;
 
+        });
 
     symbols.on("mouseover", function(d) {
       d3.select(this).raise();
@@ -357,20 +358,23 @@ function drawArrests(json) {
   // svg.append("text").attr("x", 880).attr("y", 90).text("Discourtesy").style("font-size", "10px").attr("alignment-baseline","middle")
   // svg.append("text").attr("x", 880).attr("y", 110).text("NextMuni").style("font-size", "10px").attr("alignment-baseline","middle")
 
-
-  svg.append('text')
-  .attr('class', 'title')
-  .attr('x', 500)
-  .attr('y',0)
-  .attr('dy', '1.75ex')
-  .attr('text-anchor', 'middle')
-  .attr("font-weight", 600)
-  .style("font-size", "16")
-  .text('SF Community Garden and Food Bank Locations');
 }
 
 function translate(x, y) {
   return "translate(" + String(x) + "," + String(y) + ")";
 }
+</script>
+
+
+</div>
+</div>
+
+</section>
+<div id="footer">
+</div>
+<script>
+$(function(){
+$("#footer").load("footer.html");
+});
 </script>
 </body>
